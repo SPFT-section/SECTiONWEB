@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="rankings">
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -19,7 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="lang-switch">EN</span>
-      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>
   </div>
 </header>
@@ -42,33 +42,20 @@
     <h1 class="page-title">Rankings</h1>
     <p class="page-subtitle">The most-read novels, ranked by reader tickets.</p>
 
-    <div class="tab-row">
+    <div class="tab-row" id="rankings-tabs">
       <a href="#" class="tab-btn active">Daily</a>
       <a href="#" class="tab-btn">Weekly</a>
       <a href="#" class="tab-btn">Monthly</a>
       <a href="#" class="tab-btn">All Time</a>
     </div>
 
-    <div class="empty-state">
-      <i class="fa-solid fa-ranking-star"></i>
-      <div class="empty-state-title">No rankings yet</div>
-      <div class="empty-state-desc">Once readers start spending tickets on novels, the daily leaderboard will appear here.</div>
-    </div>
-
-    <!--
-      Once ranked novels exist, list them like this inside a .ranking-list wrapper
-      (add class "top3" to the row for ranks 1–3):
-
-      <div class="ranking-row">
-        <span class="ranking-index">1</span>
-        <div class="ranking-cover"></div>
-        <div class="ranking-info">
-          <div class="ranking-title">Novel Title</div>
-          <div class="ranking-genres">Genre · Genre</div>
-        </div>
-        <div class="ranking-tickets"><strong>0</strong><span>Tickets</span></div>
+    <div id="rankings-wrap">
+      <div class="empty-state">
+        <i class="fa-solid fa-ranking-star"></i>
+        <div class="empty-state-title">No rankings yet</div>
+        <div class="empty-state-desc">Once readers start spending tickets on novels, the daily leaderboard will appear here.</div>
       </div>
-    -->
+    </div>
 
   </div>
 </main>
@@ -84,5 +71,6 @@
   </div>
 </footer>
 
+<script src="js/app.js" defer></script>
 </body>
 </html>

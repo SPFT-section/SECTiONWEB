@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="favorites">
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -19,7 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="lang-switch">EN</span>
-      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>
   </div>
 </header>
@@ -42,7 +42,7 @@
     <h1 class="page-title">My Favorites</h1>
     <p class="page-subtitle">Novels you've bookmarked to come back to.</p>
 
-    <div class="novel-grid">
+    <div class="novel-grid" id="favorites-grid">
       <div class="empty-state">
         <i class="fa-solid fa-bookmark"></i>
         <div class="empty-state-title">No favorites yet</div>
@@ -50,20 +50,6 @@
         <a href="library.html" class="btn btn-outline btn-sm">Browse the Library</a>
       </div>
     </div>
-
-    <!--
-      Once favorites exist, list them like this (duplicate per novel):
-
-      <a href="novel-detail.html" class="novel-card">
-        <button class="remove-btn"><i class="fa-solid fa-xmark"></i></button>
-        <div class="cover" data-initial="漢"></div>
-        <div class="info">
-          <div class="genre-mini">Genre · Genre</div>
-          <div class="title">Novel Title</div>
-          <div class="meta-line"><span>0 ch.</span></div>
-        </div>
-      </a>
-    -->
 
   </div>
 </main>
@@ -79,5 +65,6 @@
   </div>
 </footer>
 
+<script src="js/app.js" defer></script>
 </body>
 </html>

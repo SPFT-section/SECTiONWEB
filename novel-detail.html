@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="novel-detail">
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -19,7 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="lang-switch">EN</span>
-      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>
   </div>
 </header>
@@ -37,66 +37,7 @@
 </nav>
 
 <main>
-  <div class="container">
-
-    <section class="block">
-      <div class="detail-head">
-        <div class="detail-cover"></div>
-        <div>
-          <h1 class="detail-title">Novel Title</h1>
-          <p class="detail-alt">Original title · Language · Status</p>
-          <div class="tag-row">
-            <span class="tag">Genre</span>
-          </div>
-          <div class="stat-row">
-            <div class="stat-item"><strong>0</strong><span>Chapters</span></div>
-            <div class="stat-item"><strong>0</strong><span>Views</span></div>
-            <div class="stat-item"><strong>—</strong><span>Rating</span></div>
-            <div class="stat-item"><strong>0</strong><span>Favorites</span></div>
-          </div>
-          <p class="detail-desc">
-            No description has been added for this novel yet.
-          </p>
-          <div class="detail-actions">
-            <a href="reading.html" class="btn btn-outline">Read First Chapter</a>
-            <a href="#" class="btn btn-ghost"><i class="fa-regular fa-bookmark"></i> Add to Favorites</a>
-            <a href="novel-edit.html" class="btn btn-ghost"><i class="fa-solid fa-pen"></i> Edit Novel</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="block">
-      <div class="section-head">
-        <h2>Chapters</h2>
-        <span class="view-all">0 total</span>
-      </div>
-
-      <div class="empty-state">
-        <i class="fa-solid fa-file-lines"></i>
-        <div class="empty-state-title">No chapters yet</div>
-        <div class="empty-state-desc">Chapters for this novel haven't been published. Check back soon, or add one from the editor.</div>
-        <a href="novel-edit.html" class="btn btn-outline btn-sm">Add a Chapter</a>
-      </div>
-
-      <!--
-        Once chapters exist, list them like this (duplicate per chapter):
-
-        <div class="chapter-list">
-          <a href="reading.html" class="chapter-row">
-            <div class="chapter-info">
-              <span class="chapter-num">1</span>
-              <span class="chapter-name">Chapter Title</span>
-            </div>
-            <div class="chapter-info">
-              <span class="chapter-date">Just now</span>
-              <span class="status-pill unread">Unread</span>
-            </div>
-          </a>
-        </div>
-      -->
-    </section>
-
+  <div class="container" id="novel-detail-root">
   </div>
 </main>
 
@@ -111,5 +52,6 @@
   </div>
 </footer>
 
+<script src="js/app.js" defer></script>
 </body>
 </html>

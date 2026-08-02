@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="settings">
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -19,7 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="lang-switch">EN</span>
-      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>
   </div>
 </header>
@@ -56,7 +56,7 @@
           <div class="settings-label">Font Size</div>
           <div class="settings-desc">Adjust the text size for chapter reading.</div>
         </div>
-        <select>
+        <select id="setting-font-size">
           <option>Small</option>
           <option selected>Medium</option>
           <option>Large</option>
@@ -71,14 +71,14 @@
           <div class="settings-label">Auto-scroll</div>
           <div class="settings-desc">Automatically scroll while reading a chapter.</div>
         </div>
-        <div class="toggle"></div>
+        <div class="toggle" id="setting-autoscroll"></div>
       </div>
       <div class="settings-row">
         <div>
           <div class="settings-label">Save Reading History</div>
           <div class="settings-desc">Track chapters you've read to resume later.</div>
         </div>
-        <div class="toggle on"></div>
+        <div class="toggle on" id="setting-savehistory"></div>
       </div>
     </div>
 
@@ -87,23 +87,23 @@
       <div class="settings-row">
         <div>
           <div class="settings-label">Email</div>
-          <div class="settings-desc">No email on file</div>
+          <div class="settings-desc" id="account-email-desc">No email on file</div>
         </div>
-        <button class="btn btn-outline btn-sm">Change</button>
+        <button class="btn btn-outline btn-sm" id="account-email-btn">Change</button>
       </div>
       <div class="settings-row">
         <div>
           <div class="settings-label">Password</div>
-          <div class="settings-desc">Not set</div>
+          <div class="settings-desc" id="account-password-desc">Not set</div>
         </div>
-        <button class="btn btn-outline btn-sm">Change</button>
+        <button class="btn btn-outline btn-sm" id="account-password-btn">Change</button>
       </div>
       <div class="settings-row">
         <div>
           <div class="settings-label danger-text">Delete Account</div>
           <div class="settings-desc">Permanently remove your account and reading data.</div>
         </div>
-        <button class="btn btn-danger btn-sm">Delete</button>
+        <button class="btn btn-danger btn-sm" id="account-delete-btn">Delete</button>
       </div>
     </div>
 
@@ -121,5 +121,6 @@
   </div>
 </footer>
 
+<script src="js/app.js" defer></script>
 </body>
 </html>

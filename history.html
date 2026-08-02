@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="history">
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -19,7 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="lang-switch">EN</span>
-      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>
   </div>
 </header>
@@ -42,33 +42,21 @@
     <h1 class="page-title">Reading History</h1>
     <p class="page-subtitle">Every novel you've opened, tracked automatically.</p>
 
-    <div class="chip-filter">
+    <div class="chip-filter" id="history-chips">
       <a href="#" class="chip active">All</a>
       <a href="#" class="chip">Reading</a>
       <a href="#" class="chip">Completed</a>
       <a href="#" class="chip">Paused</a>
     </div>
 
-    <div class="empty-state">
-      <i class="fa-solid fa-clock-rotate-left"></i>
-      <div class="empty-state-title">No reading history yet</div>
-      <div class="empty-state-desc">Chapters you open will be tracked here automatically so you can pick up where you left off.</div>
-      <a href="library.html" class="btn btn-outline btn-sm">Browse the Library</a>
-    </div>
-
-    <!--
-      Once history exists, list items like this (duplicate per novel):
-
-      <div class="history-item">
-        <div class="history-cover"></div>
-        <div class="history-body">
-          <div class="history-title">Novel Title</div>
-          <div class="history-chapter">Last read: Chapter 1 — Just now</div>
-          <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
-        </div>
-        <span class="history-status reading">Reading</span>
+    <div id="history-list">
+      <div class="empty-state">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <div class="empty-state-title">No reading history yet</div>
+        <div class="empty-state-desc">Chapters you open will be tracked here automatically so you can pick up where you left off.</div>
+        <a href="library.html" class="btn btn-outline btn-sm">Browse the Library</a>
       </div>
-    -->
+    </div>
 
   </div>
 </main>
@@ -84,5 +72,6 @@
   </div>
 </footer>
 
+<script src="js/app.js" defer></script>
 </body>
 </html>

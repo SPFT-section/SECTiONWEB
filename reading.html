@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="reading">
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -19,7 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="lang-switch">EN</span>
-      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>
   </div>
 </header>
@@ -38,37 +38,18 @@
 
 <div class="reader-bar">
   <div class="reader-bar-inner">
-    <a href="novel-detail.html" class="reader-back"><i class="fa-solid fa-arrow-left"></i> Novel</a>
-    <span class="reader-chapter-select">Chapter Title Goes Here</span>
+    <a href="novel-detail.html" class="reader-back" id="reader-back"><i class="fa-solid fa-arrow-left"></i> Novel</a>
+    <span class="reader-chapter-select" id="reader-chapter-select">Loading…</span>
     <div class="reader-tools">
-      <a href="#" class="reader-tool-btn" title="Decrease font size"><i class="fa-solid fa-minus"></i></a>
-      <a href="#" class="reader-tool-btn" title="Increase font size"><i class="fa-solid fa-plus"></i></a>
-      <a href="#" class="reader-tool-btn" title="Add to favorites"><i class="fa-regular fa-bookmark"></i></a>
+      <a href="#" class="reader-tool-btn" id="font-dec" title="Decrease font size"><i class="fa-solid fa-minus"></i></a>
+      <a href="#" class="reader-tool-btn" id="font-inc" title="Increase font size"><i class="fa-solid fa-plus"></i></a>
+      <a href="#" class="reader-tool-btn" id="reader-fav" title="Add to favorites"><i class="fa-regular fa-bookmark"></i></a>
     </div>
   </div>
 </div>
 
 <main>
-  <div class="reader-content">
-
-    <div class="reader-novel-title">Novel Title</div>
-    <h1 class="reader-chapter-title">Chapter Title Goes Here</h1>
-
-    <div class="reader-mtl-note">
-      <i class="fa-solid fa-language"></i>
-      <span>This chapter is machine-translated and may contain awkward phrasing.</span>
-    </div>
-
-    <article class="reader-text">
-      <p>Chapter content will appear here once this novel's translated text is added.</p>
-    </article>
-
-    <div class="reader-nav">
-      <a href="#" class="btn btn-outline disabled"><i class="fa-solid fa-angle-left"></i> Previous</a>
-      <a href="novel-detail.html" class="btn btn-ghost">All Chapters</a>
-      <a href="#" class="btn btn-outline">Next <i class="fa-solid fa-angle-right"></i></a>
-    </div>
-
+  <div class="reader-content" id="reading-root">
   </div>
 </main>
 
@@ -83,5 +64,6 @@
   </div>
 </footer>
 
+<script src="js/app.js" defer></script>
 </body>
 </html>

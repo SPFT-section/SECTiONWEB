@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="profile">
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -19,7 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="lang-switch">EN</span>
-      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>
   </div>
 </header>
@@ -40,18 +40,18 @@
   <div class="container">
 
     <div class="profile-head">
-      <div class="avatar-lg">U</div>
+      <div class="avatar-lg" id="profile-avatar">U</div>
       <div>
-        <h1 class="profile-name">Username</h1>
-        <p class="profile-handle">@username</p>
-        <p class="profile-bio">No bio added yet.</p>
+        <h1 class="profile-name" id="profile-name">Guest</h1>
+        <p class="profile-handle" id="profile-handle">@guest</p>
+        <p class="profile-bio" id="profile-bio">No bio added yet.</p>
       </div>
     </div>
 
     <div class="stat-cards">
-      <div class="stat-card"><strong>0</strong><span>Novels Read</span></div>
-      <div class="stat-card"><strong>0</strong><span>Chapters Read</span></div>
-      <div class="stat-card"><strong>0</strong><span>Tickets</span></div>
+      <div class="stat-card"><strong id="stat-novels">0</strong><span>Novels Read</span></div>
+      <div class="stat-card"><strong id="stat-chapters">0</strong><span>Chapters Read</span></div>
+      <div class="stat-card"><strong id="stat-tickets">0</strong><span>Tickets</span></div>
     </div>
 
     <div class="submenu">
@@ -65,22 +65,14 @@
         <h2>Recently Read</h2>
         <a href="history.html" class="view-all">View All →</a>
       </div>
-      <div class="empty-state">
-        <i class="fa-solid fa-book-open"></i>
-        <div class="empty-state-title">Nothing read yet</div>
-        <div class="empty-state-desc">Start a novel and it'll show up here for quick access.</div>
-        <a href="library.html" class="btn btn-outline btn-sm">Browse the Library</a>
-      </div>
-
-      <!--
-        Once reading activity exists, list rows like this inside a .rank-list wrapper:
-
-        <div class="recent-row">
-          <div class="recent-cover"></div>
-          <div class="recent-title">Novel Title</div>
-          <div class="recent-progress">Ch. 1 of 1</div>
+      <div id="recent-read-wrap">
+        <div class="empty-state">
+          <i class="fa-solid fa-book-open"></i>
+          <div class="empty-state-title">Nothing read yet</div>
+          <div class="empty-state-desc">Start a novel and it'll show up here for quick access.</div>
+          <a href="library.html" class="btn btn-outline btn-sm">Browse the Library</a>
         </div>
-      -->
+      </div>
     </section>
 
   </div>
@@ -97,5 +89,6 @@
   </div>
 </footer>
 
+<script src="js/app.js" defer></script>
 </body>
 </html>

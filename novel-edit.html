@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-page="novel-edit">
 
 <header class="topbar">
   <div class="topbar-inner">
@@ -19,7 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="lang-switch">EN</span>
-      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>
   </div>
 </header>
@@ -39,18 +39,19 @@
 <main>
   <div class="container">
 
-    <h1 class="page-title">Edit Novel</h1>
-    <p class="page-subtitle">Update details, cover, and chapters for this title.</p>
+    <h1 class="page-title" id="editor-heading">Edit Novel</h1>
+    <p class="page-subtitle" id="editor-subheading">Update details, cover, and chapters for this title.</p>
 
     <section class="block">
       <div class="editor-layout">
 
         <div>
-          <div class="cover-upload">
+          <div class="cover-upload" id="cover-upload-box">
             <i class="fa-solid fa-image"></i>
             <span>No cover uploaded<br>Recommended 400×560</span>
-            <button type="button" class="btn btn-outline btn-sm">Upload Cover</button>
+            <button type="button" class="btn btn-outline btn-sm" id="cover-upload-btn">Upload Cover</button>
           </div>
+          <input type="file" id="cover-file-input" accept="image/*" style="display:none;">
         </div>
 
         <div>
@@ -88,18 +89,18 @@
           <div class="field">
             <label>Genres</label>
             <div class="genre-checks">
-              <label class="genre-check"><input type="checkbox"> Action</label>
-              <label class="genre-check"><input type="checkbox"> Adventure</label>
-              <label class="genre-check"><input type="checkbox"> Drama</label>
-              <label class="genre-check"><input type="checkbox"> Fan-Fiction</label>
-              <label class="genre-check"><input type="checkbox"> Fantasy</label>
-              <label class="genre-check"><input type="checkbox"> Mature</label>
-              <label class="genre-check"><input type="checkbox"> Mecha</label>
-              <label class="genre-check"><input type="checkbox"> Military</label>
-              <label class="genre-check"><input type="checkbox"> Sci-fi</label>
-              <label class="genre-check"><input type="checkbox"> Shounen</label>
-              <label class="genre-check"><input type="checkbox"> Supernatural</label>
-              <label class="genre-check"><input type="checkbox"> Urban Life</label>
+              <label class="genre-check"><input type="checkbox" value="Action"> Action</label>
+              <label class="genre-check"><input type="checkbox" value="Adventure"> Adventure</label>
+              <label class="genre-check"><input type="checkbox" value="Drama"> Drama</label>
+              <label class="genre-check"><input type="checkbox" value="Fan-Fiction"> Fan-Fiction</label>
+              <label class="genre-check"><input type="checkbox" value="Fantasy"> Fantasy</label>
+              <label class="genre-check"><input type="checkbox" value="Mature"> Mature</label>
+              <label class="genre-check"><input type="checkbox" value="Mecha"> Mecha</label>
+              <label class="genre-check"><input type="checkbox" value="Military"> Military</label>
+              <label class="genre-check"><input type="checkbox" value="Sci-fi"> Sci-fi</label>
+              <label class="genre-check"><input type="checkbox" value="Shounen"> Shounen</label>
+              <label class="genre-check"><input type="checkbox" value="Supernatural"> Supernatural</label>
+              <label class="genre-check"><input type="checkbox" value="Urban Life"> Urban Life</label>
             </div>
           </div>
 
@@ -107,47 +108,39 @@
             <label for="novel-desc">Description</label>
             <textarea id="novel-desc" placeholder="Write a short synopsis for this novel..."></textarea>
           </div>
+
+          <label class="checkbox-row" style="margin-bottom: 8px;">
+            <input type="checkbox" id="novel-featured">
+            <span>Feature this novel on the homepage</span>
+          </label>
         </div>
 
       </div>
 
       <div class="editor-actions">
-        <button type="button" class="btn btn-ghost">Cancel</button>
-        <button type="button" class="btn btn-solid">Save Novel</button>
+        <button type="button" class="btn btn-ghost" id="editor-cancel">Cancel</button>
+        <button type="button" class="btn btn-solid" id="editor-save">Save Novel</button>
       </div>
     </section>
 
     <section class="block">
       <div class="section-head">
         <h2>Chapters</h2>
-        <span class="view-all">0 total</span>
+        <span class="view-all" id="chapter-count">0 total</span>
       </div>
 
-      <div class="empty-state">
-        <i class="fa-solid fa-file-lines"></i>
-        <div class="empty-state-title">No chapters yet</div>
-        <div class="empty-state-desc">Add the first chapter below to start publishing this novel.</div>
-      </div>
-
-      <div class="add-chapter-row">
-        <input type="text" placeholder="New chapter title, e.g. Chapter 1 — The Awakening">
-        <button type="button" class="btn btn-outline btn-sm"><i class="fa-solid fa-plus"></i> Add Chapter</button>
-      </div>
-
-      <!--
-        Once chapters exist, list them like this (duplicate per chapter):
-
-        <div class="chapter-admin-row">
-          <span class="chapter-admin-num">1</span>
-          <input type="text" class="chapter-admin-title" value="Chapter 1 — The Awakening">
-          <span class="chapter-admin-status">Draft</span>
-          <div class="chapter-admin-actions">
-            <a href="reading.html" class="icon-btn" title="Preview"><i class="fa-solid fa-eye"></i></a>
-            <button type="button" class="icon-btn" title="Save"><i class="fa-solid fa-check"></i></button>
-            <button type="button" class="icon-btn danger" title="Delete"><i class="fa-solid fa-trash"></i></button>
-          </div>
+      <div id="chapter-admin-list">
+        <div class="empty-state">
+          <i class="fa-solid fa-file-lines"></i>
+          <div class="empty-state-title">No chapters yet</div>
+          <div class="empty-state-desc">Add the first chapter below to start publishing this novel.</div>
         </div>
-      -->
+      </div>
+
+      <div class="add-chapter-row" id="add-chapter-row">
+        <input type="text" id="new-chapter-title" placeholder="New chapter title, e.g. Chapter 1 — The Awakening">
+        <button type="button" class="btn btn-outline btn-sm" id="add-chapter-btn"><i class="fa-solid fa-plus"></i> Add Chapter</button>
+      </div>
     </section>
 
   </div>
@@ -164,5 +157,6 @@
   </div>
 </footer>
 
+<script src="js/app.js" defer></script>
 </body>
 </html>

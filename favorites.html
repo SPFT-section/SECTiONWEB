@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>(function(){try{var d=JSON.parse(localStorage.getItem("section_db_v1"));if(d&&d.settings&&d.settings.theme==="light")document.documentElement.classList.add("theme-light");}catch(e){}})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -23,6 +24,7 @@
       <span class="brand-sub">Light Novels</span>
     </div>
     <div class="topbar-right">
+      <button type="button" id="theme-toggle" class="theme-toggle-btn" title="Toggle light / dark mode"><i class="fa-solid fa-moon"></i></button>
       <span class="lang-switch">EN</span>
       <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
     </div>

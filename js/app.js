@@ -24,7 +24,7 @@
       history: [],      // { novelId, chapterId, lastReadAt, status }
       readChapters: [],
       tickets: 0,
-      settings: { fontSize: "medium", autoScroll: false, saveHistory: true },
+      settings: { fontSize: "medium", autoScroll: false, saveHistory: true, theme: "dark" },
       adDismissed: false
     };
   }
@@ -38,6 +38,10 @@
       // shallow-merge so older saved DBs gain any new fields safely
       for (var k in base) {
         if (!(k in parsed)) parsed[k] = base[k];
+      }
+      // settings is nested, merge its keys individually too
+      for (var sk in base.settings) {
+        if (!(sk in parsed.settings)) parsed.settings[sk] = base.settings[sk];
       }
       return parsed;
     } catch (e) {
@@ -101,6 +105,24 @@
   /* ------------------------------------------------------------------ *
    *  Shared chrome: auth slot + ad notice dismiss + genre tag filtering
    * ------------------------------------------------------------------ */
+
+  function applyTheme(db) {
+    var isLight = db.settings.theme === "light";
+    document.documentElement.classList.toggle("theme-light", isLight);
+    var btn = document.getElementById("theme-toggle");
+    if (btn) btn.innerHTML = '<i class="fa-solid fa-' + (isLight ? "sun" : "moon") + '"></i>';
+  }
+
+  function initThemeToggle() {
+    var btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var d = loadDB();
+      d.settings.theme = d.settings.theme === "light" ? "dark" : "light";
+      saveDB(d);
+      applyTheme(d);
+    });
+  }
 
   function renderAuthSlot(db) {
     var slot = document.getElementById("auth-slot");
@@ -1033,6 +1055,18 @@
     wireToggle("setting-autoscroll", "autoScroll");
     wireToggle("setting-savehistory", "saveHistory");
 
+    var darkToggle = document.getElementById("setting-darkmode");
+    if (darkToggle) {
+      darkToggle.classList.toggle("on", loadDB().settings.theme !== "light");
+      darkToggle.addEventListener("click", function () {
+        var d = loadDB();
+        d.settings.theme = d.settings.theme === "light" ? "dark" : "light";
+        saveDB(d);
+        applyTheme(d);
+        darkToggle.classList.toggle("on", d.settings.theme !== "light");
+      });
+    }
+
     var emailDesc = document.getElementById("account-email-desc");
     var emailBtn = document.getElementById("account-email-btn");
     if (emailBtn) {
@@ -1075,6 +1109,8 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     var db = loadDB();
+    applyTheme(db);
+    initThemeToggle();
     renderAuthSlot(db);
     initAdNotice(db);
 

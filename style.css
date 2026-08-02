@@ -1025,25 +1025,59 @@ section.block { margin-bottom: 56px; }
   display: flex;
   align-items: center;
   gap: 28px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .avatar-lg {
   width: 100px; height: 100px;
   border-radius: 50%;
   border: 1px solid var(--text-highlight);
-  background: #1a1a1a;
+  background: var(--bg-card);
   display: flex; align-items: center; justify-content: center;
   font-size: 34px; font-weight: 800; color: var(--text-highlight);
+  position: relative;
+  flex-shrink: 0;
+  background-size: cover;
+  background-position: center;
 }
+.avatar-edit-btn {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--text-highlight);
+  color: var(--on-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  border: 2px solid var(--bg-main);
+  cursor: pointer;
+}
+.avatar-edit-btn:hover { opacity: 0.85; }
 
-.profile-name { font-size: 24px; font-weight: 800; color: var(--text-highlight); margin-bottom: 4px; }
+.profile-head-top { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+.profile-name { font-size: 24px; font-weight: 800; color: var(--text-highlight); margin: 0; }
 .profile-handle { font-size: 13px; color: var(--text-secondary); margin-bottom: 10px; }
-.profile-bio { font-size: 13px; color: var(--text-secondary); max-width: 480px; line-height: 1.6; }
+.profile-bio { font-size: 13px; color: var(--text-secondary); max-width: 480px; line-height: 1.6; margin-bottom: 8px; }
+.profile-meta { font-size: 11.5px; color: var(--text-tertiary); }
+.profile-meta i { margin-right: 5px; }
+
+.profile-edit-panel {
+  display: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 32px;
+}
+.profile-edit-panel.open { display: block; }
+.profile-edit-panel .form-grid { margin-bottom: 14px; }
+.profile-edit-panel .field { margin-bottom: 14px; }
+.profile-edit-panel .field:last-of-type { margin-bottom: 0; }
+.profile-edit-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
 
 .stat-cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 40px;
 }
@@ -1072,6 +1106,34 @@ section.block { margin-bottom: 56px; }
   transition: all 0.2s var(--ease);
 }
 .submenu a:hover { color: var(--text-main); border-color: var(--border-hover); }
+
+.genre-bar-row { display: flex; align-items: center; gap: 14px; padding: 10px 0; }
+.genre-bar-label { width: 110px; flex-shrink: 0; font-size: 12px; color: var(--text-main); font-weight: 600; }
+.genre-bar-track { flex: 1; height: 6px; border-radius: 3px; background: var(--bg-hover); overflow: hidden; }
+.genre-bar-fill { height: 100%; background: var(--text-highlight); border-radius: 3px; }
+.genre-bar-pct { width: 36px; text-align: right; font-size: 11.5px; color: var(--text-secondary); flex-shrink: 0; }
+
+.achievement-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.achievement-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 20px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-tertiary);
+}
+.achievement-chip i { font-size: 20px; }
+.achievement-chip .achievement-name { font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+.achievement-chip .achievement-desc { font-size: 10.5px; color: var(--text-tertiary); line-height: 1.5; }
+.achievement-chip.earned {
+  border-color: var(--text-highlight);
+  color: var(--text-highlight);
+}
+.achievement-chip.earned .achievement-name { color: var(--text-main); }
+.achievement-chip.earned .achievement-desc { color: var(--text-secondary); }
 
 .recent-row {
   display: flex;
@@ -1571,7 +1633,7 @@ section.block { margin-bottom: 56px; }
   .featured-cover { width: 140px; height: 196px; }
   .detail-head { grid-template-columns: 1fr; }
   .detail-cover { width: 140px; height: 196px; }
-  .stat-cards { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .stat-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .profile-head { flex-direction: column; text-align: center; }
 }
 

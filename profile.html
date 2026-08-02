@@ -47,17 +47,47 @@
   <div class="container">
 
     <div class="profile-head">
-      <div class="avatar-lg" id="profile-avatar">U</div>
+      <div class="avatar-lg" id="profile-avatar">
+        <span id="avatar-initials">U</span>
+        <button type="button" class="avatar-edit-btn" id="avatar-edit-btn" title="Change avatar"><i class="fa-solid fa-camera"></i></button>
+        <input type="file" id="avatar-file-input" accept="image/*" style="display:none;">
+      </div>
       <div>
-        <h1 class="profile-name" id="profile-name">Guest</h1>
+        <div class="profile-head-top">
+          <h1 class="profile-name" id="profile-name">Guest</h1>
+          <button type="button" class="btn btn-ghost btn-sm" id="edit-profile-btn"><i class="fa-solid fa-pen"></i> Edit Profile</button>
+        </div>
         <p class="profile-handle" id="profile-handle">@guest</p>
         <p class="profile-bio" id="profile-bio">No bio added yet.</p>
+        <p class="profile-meta" id="profile-meta"></p>
+      </div>
+    </div>
+
+    <div class="profile-edit-panel" id="profile-edit-panel">
+      <div class="form-grid">
+        <div class="field">
+          <label for="edit-username">Username</label>
+          <input type="text" id="edit-username" placeholder="Username">
+        </div>
+        <div class="field">
+          <label for="edit-handle">Handle</label>
+          <input type="text" id="edit-handle" placeholder="@handle">
+        </div>
+      </div>
+      <div class="field">
+        <label for="edit-bio">Bio</label>
+        <textarea id="edit-bio" placeholder="Tell other readers a little about yourself..." style="min-height:80px;"></textarea>
+      </div>
+      <div class="profile-edit-actions">
+        <button type="button" class="btn btn-ghost" id="edit-profile-cancel">Cancel</button>
+        <button type="button" class="btn btn-solid" id="edit-profile-save">Save Profile</button>
       </div>
     </div>
 
     <div class="stat-cards">
       <div class="stat-card"><strong id="stat-novels">0</strong><span>Novels Read</span></div>
       <div class="stat-card"><strong id="stat-chapters">0</strong><span>Chapters Read</span></div>
+      <div class="stat-card"><strong id="stat-favorites">0</strong><span>Favorites</span></div>
       <div class="stat-card"><strong id="stat-tickets">0</strong><span>Tickets</span></div>
     </div>
 
@@ -66,6 +96,26 @@
       <a href="favorites.html"><i class="fa-solid fa-bookmark"></i> Favorites</a>
       <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
     </div>
+
+    <section class="block">
+      <div class="section-head">
+        <h2>Favorite Genres</h2>
+      </div>
+      <div id="genre-breakdown-wrap">
+        <div class="empty-state">
+          <i class="fa-solid fa-chart-simple"></i>
+          <div class="empty-state-title">No genre data yet</div>
+          <div class="empty-state-desc">Read a few novels and your most-read genres will show up here.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="section-head">
+        <h2>Achievements</h2>
+      </div>
+      <div class="achievement-grid" id="achievement-grid"></div>
+    </section>
 
     <section class="block">
       <div class="section-head">

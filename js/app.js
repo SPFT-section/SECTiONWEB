@@ -18,7 +18,7 @@
     return {
       novels: [],
       chapters: [],
-      user: { username: "", handle: "", bio: "", email: "", password: "" },
+      user: { username: "", handle: "", bio: "", email: "", password: "", avatar: null, joinedAt: null },
       session: { loggedIn: false },
       favorites: [],
       history: [],      // { novelId, chapterId, lastReadAt, status }
@@ -42,6 +42,9 @@
       // settings is nested, merge its keys individually too
       for (var sk in base.settings) {
         if (!(sk in parsed.settings)) parsed.settings[sk] = base.settings[sk];
+      }
+      for (var uk in base.user) {
+        if (!(uk in parsed.user)) parsed.user[uk] = base.user[uk];
       }
       return parsed;
     } catch (e) {
@@ -333,6 +336,7 @@
         db.user.handle = "@" + db.user.username.toLowerCase().replace(/\s+/g, "");
         db.user.email = isEmail ? idVal : db.user.email;
         db.user.password = pwVal;
+        db.user.joinedAt = Date.now();
       }
       db.session.loggedIn = true;
       saveDB(db);
@@ -952,17 +956,139 @@
    * ------------------------------------------------------------------ */
 
   function pageProfile() {
-    var db = loadDB();
-    document.getElementById("profile-avatar").textContent = (db.user.username || "U").slice(0, 2).toUpperCase();
-    document.getElementById("profile-name").textContent = db.user.username || "Guest";
-    document.getElementById("profile-handle").textContent = db.user.handle || "@guest";
-    document.getElementById("profile-bio").textContent = db.user.bio || "No bio added yet.";
+    function renderIdentity() {
+      var d = loadDB();
+      var avatarEl = document.getElementById("profile-avatar");
+      var initialsEl = document.getElementById("avatar-initials");
+      if (d.user.avatar) {
+        avatarEl.style.backgroundImage = "url(" + d.user.avatar + ")";
+        initialsEl.textContent = "";
+      } else {
+        avatarEl.style.backgroundImage = "none";
+        initialsEl.textContent = (d.user.username || "U").slice(0, 2).toUpperCase();
+      }
+      document.getElementById("profile-name").textContent = d.user.username || "Guest";
+      document.getElementById("profile-handle").textContent = d.user.handle || "@guest";
+      document.getElementById("profile-bio").textContent = d.user.bio || "No bio added yet.";
+      var metaEl = document.getElementById("profile-meta");
+      metaEl.innerHTML = d.user.joinedAt
+        ? '<i class="fa-solid fa-calendar"></i>Reading since ' + new Date(d.user.joinedAt).toLocaleDateString(undefined, { month: "long", year: "numeric" })
+        : '<i class="fa-solid fa-calendar"></i>No profile yet — log in or edit your profile to set one up.';
+    }
+    renderIdentity();
 
+    // --- avatar upload ---
+    var avatarBtn = document.getElementById("avatar-edit-btn");
+    var avatarInput = document.getElementById("avatar-file-input");
+    if (avatarBtn) avatarBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      avatarInput.click();
+    });
+    if (avatarInput) avatarInput.addEventListener("change", function () {
+      var file = avatarInput.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var d = loadDB();
+        d.user.avatar = e.target.result;
+        saveDB(d);
+        renderIdentity();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // --- edit profile panel ---
+    var editBtn = document.getElementById("edit-profile-btn");
+    var editPanel = document.getElementById("profile-edit-panel");
+    var editUsername = document.getElementById("edit-username");
+    var editHandle = document.getElementById("edit-handle");
+    var editBio = document.getElementById("edit-bio");
+    if (editBtn) editBtn.addEventListener("click", function () {
+      var d = loadDB();
+      editUsername.value = d.user.username || "";
+      editHandle.value = d.user.handle || "";
+      editBio.value = d.user.bio || "";
+      editPanel.classList.add("open");
+      editUsername.focus();
+    });
+    var editCancel = document.getElementById("edit-profile-cancel");
+    if (editCancel) editCancel.addEventListener("click", function () {
+      editPanel.classList.remove("open");
+    });
+    var editSave = document.getElementById("edit-profile-save");
+    if (editSave) editSave.addEventListener("click", function () {
+      var username = editUsername.value.trim();
+      if (!username) { editUsername.focus(); return; }
+      var d = loadDB();
+      var handle = editHandle.value.trim() || username.toLowerCase().replace(/\s+/g, "");
+      if (handle.charAt(0) !== "@") handle = "@" + handle;
+      d.user.username = username;
+      d.user.handle = handle;
+      d.user.bio = editBio.value.trim();
+      if (!d.user.joinedAt) d.user.joinedAt = Date.now();
+      saveDB(d);
+      editPanel.classList.remove("open");
+      renderIdentity();
+    });
+
+    // --- stats ---
+    var db = loadDB();
     var novelsRead = new Set(db.history.map(function (h) { return h.novelId; })).size;
     document.getElementById("stat-novels").textContent = novelsRead;
     document.getElementById("stat-chapters").textContent = db.readChapters.length;
+    document.getElementById("stat-favorites").textContent = db.favorites.length;
     document.getElementById("stat-tickets").textContent = db.tickets || 0;
 
+    // --- favorite genres breakdown ---
+    var genreWrap = document.getElementById("genre-breakdown-wrap");
+    var novelIdsRead = Array.from(new Set(db.history.map(function (h) { return h.novelId; })));
+    var genreCounts = {};
+    novelIdsRead.forEach(function (id) {
+      var novel = db.novels.filter(function (n) { return n.id === id; })[0];
+      if (!novel) return;
+      (novel.genres || []).forEach(function (g) {
+        genreCounts[g] = (genreCounts[g] || 0) + 1;
+      });
+    });
+    var genreEntries = Object.keys(genreCounts).map(function (g) { return { genre: g, count: genreCounts[g] }; })
+      .sort(function (a, b) { return b.count - a.count; }).slice(0, 5);
+    if (!genreEntries.length) {
+      genreWrap.innerHTML = emptyStateHTML("fa-chart-simple", "No genre data yet",
+        "Read a few novels and your most-read genres will show up here.");
+    } else {
+      var maxCount = genreEntries[0].count;
+      genreWrap.innerHTML = genreEntries.map(function (e) {
+        var pct = Math.round((e.count / maxCount) * 100);
+        return (
+          '<div class="genre-bar-row">' +
+          '<span class="genre-bar-label">' + escapeHtml(e.genre) + "</span>" +
+          '<div class="genre-bar-track"><div class="genre-bar-fill" style="width:' + pct + '%"></div></div>' +
+          '<span class="genre-bar-pct">' + e.count + "</span>" +
+          "</div>"
+        );
+      }).join("");
+    }
+
+    // --- achievements ---
+    var achievements = [
+      { icon: "fa-flag", name: "First Steps", desc: "Read your first chapter", done: db.readChapters.length >= 1 },
+      { icon: "fa-book-open", name: "Bookworm", desc: "Read 25 chapters", done: db.readChapters.length >= 25 },
+      { icon: "fa-fire", name: "Dedicated Reader", desc: "Read 100 chapters", done: db.readChapters.length >= 100 },
+      { icon: "fa-compass", name: "Novel Explorer", desc: "Read 5 different novels", done: novelsRead >= 5 },
+      { icon: "fa-bookmark", name: "Collector", desc: "Favorite 5 novels", done: db.favorites.length >= 5 },
+      { icon: "fa-ticket", name: "Ticket Saver", desc: "Earn 100 tickets", done: (db.tickets || 0) >= 100 }
+    ];
+    document.getElementById("achievement-grid").innerHTML = achievements.map(function (a) {
+      return (
+        '<div class="achievement-chip' + (a.done ? " earned" : "") + '">' +
+        '<i class="fa-solid ' + (a.done ? a.icon : "fa-lock") + '"></i>' +
+        '<span class="achievement-name">' + escapeHtml(a.name) + "</span>" +
+        '<span class="achievement-desc">' + escapeHtml(a.desc) + "</span>" +
+        "</div>"
+      );
+    }).join("");
+
+    // --- recently read ---
     var wrap = document.getElementById("recent-read-wrap");
     var items = db.history.slice().sort(function (a, b) { return b.lastReadAt - a.lastReadAt; }).slice(0, 4);
     if (!items.length) {

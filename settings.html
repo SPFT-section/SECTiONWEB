@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — SECTiON</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <a href="index.html" class="brand-mark">SECTi<span class="dot">O</span>N</a>
+      <span class="brand-sub">Light Novels</span>
+    </div>
+    <div class="topbar-right">
+      <span class="lang-switch">EN</span>
+      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="library.html"><i class="fa-solid fa-book"></i>Library</a>
+    <a href="rankings.html"><i class="fa-solid fa-ranking-star"></i>Rankings</a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i>Profile</a>
+    <a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+    <a href="favorites.html"><i class="fa-solid fa-bookmark"></i>Favorites</a>
+    <a href="settings.html" class="active"><i class="fa-solid fa-gear"></i>Settings</a>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <h1 class="page-title">Settings</h1>
+    <p class="page-subtitle">Manage your reading experience and account.</p>
+
+    <div class="settings-group">
+      <div class="settings-group-title">Appearance</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Dark Mode</div>
+          <div class="settings-desc">SECTiON is dark by design — always on.</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Font Size</div>
+          <div class="settings-desc">Adjust the text size for chapter reading.</div>
+        </div>
+        <select>
+          <option>Small</option>
+          <option selected>Medium</option>
+          <option>Large</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-title">Reading</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Auto-scroll</div>
+          <div class="settings-desc">Automatically scroll while reading a chapter.</div>
+        </div>
+        <div class="toggle"></div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Save Reading History</div>
+          <div class="settings-desc">Track chapters you've read to resume later.</div>
+        </div>
+        <div class="toggle on"></div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-title">Account</div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Email</div>
+          <div class="settings-desc">noxreader@example.com</div>
+        </div>
+        <button class="btn btn-outline btn-sm">Change</button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label">Password</div>
+          <div class="settings-desc">Last changed 4 months ago</div>
+        </div>
+        <button class="btn btn-outline btn-sm">Change</button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <div class="settings-label danger-text">Delete Account</div>
+          <div class="settings-desc">Permanently remove your account and reading data.</div>
+        </div>
+        <button class="btn btn-danger btn-sm">Delete</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>SECTiON · Light Novels</span>
+    <div class="footer-social">
+      <a href="#"><i class="fa-brands fa-github"></i></a>
+      <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

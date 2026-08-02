@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login — SECTiON</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <a href="index.html" class="brand-mark">SECTi<span class="dot">O</span>N</a>
+      <span class="brand-sub">Light Novels</span>
+    </div>
+    <div class="topbar-right">
+      <span class="lang-switch">EN</span>
+      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="library.html"><i class="fa-solid fa-book"></i>Library</a>
+    <a href="rankings.html"><i class="fa-solid fa-ranking-star"></i>Rankings</a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i>Profile</a>
+    <a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+    <a href="favorites.html"><i class="fa-solid fa-bookmark"></i>Favorites</a>
+    <a href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a>
+  </div>
+</nav>
+
+<main>
+  <div class="auth-wrap">
+    <div class="auth-box">
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-sub">Log in to continue reading where you left off.</p>
+
+      <div class="field">
+        <label for="login-id">Email or Username</label>
+        <input type="text" id="login-id" placeholder="you@example.com">
+      </div>
+      <div class="field">
+        <label for="login-pw">Password</label>
+        <input type="password" id="login-pw" placeholder="••••••••">
+      </div>
+
+      <div class="field-row">
+        <span class="checkbox-row">
+          <input type="checkbox" id="remember">
+          <label for="remember">Remember me</label>
+        </span>
+        <a href="#" class="link-muted">Forgot password?</a>
+      </div>
+
+      <a href="profile.html" class="btn btn-solid btn-block">Log In</a>
+
+      <div class="auth-divider">or continue with</div>
+
+      <div class="social-row">
+        <a href="#" class="social-btn"><i class="fa-brands fa-google"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" class="social-btn"><i class="fa-brands fa-apple"></i></a>
+      </div>
+
+      <p class="auth-footer">Don't have an account? <a href="#">Sign up</a></p>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>SECTiON · Light Novels</span>
+    <div class="footer-social">
+      <a href="#"><i class="fa-brands fa-github"></i></a>
+      <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -91,6 +91,7 @@
 
     <div class="settings-group">
       <div class="settings-group-title">Account</div>
+
       <div class="settings-row">
         <div>
           <div class="settings-label">Email</div>
@@ -98,6 +99,12 @@
         </div>
         <button class="btn btn-outline btn-sm" id="account-email-btn">Change</button>
       </div>
+      <div class="settings-edit-panel" id="email-edit-panel" style="display:none;">
+        <input type="email" id="email-edit-input" placeholder="you@example.com">
+        <button class="btn btn-solid btn-sm" id="email-save-btn">Save</button>
+        <button class="btn btn-ghost btn-sm" id="email-cancel-btn">Cancel</button>
+      </div>
+
       <div class="settings-row">
         <div>
           <div class="settings-label">Password</div>
@@ -105,12 +112,23 @@
         </div>
         <button class="btn btn-outline btn-sm" id="account-password-btn">Change</button>
       </div>
+      <div class="settings-edit-panel" id="password-edit-panel" style="display:none;">
+        <input type="password" id="password-edit-input" placeholder="New password">
+        <button class="btn btn-solid btn-sm" id="password-save-btn">Save</button>
+        <button class="btn btn-ghost btn-sm" id="password-cancel-btn">Cancel</button>
+      </div>
+
       <div class="settings-row">
         <div>
           <div class="settings-label danger-text">Delete Account</div>
           <div class="settings-desc">Permanently remove your account and reading data.</div>
         </div>
         <button class="btn btn-danger btn-sm" id="account-delete-btn">Delete</button>
+      </div>
+      <div class="settings-edit-panel" id="delete-confirm-panel" style="display:none;">
+        <span class="settings-desc" style="flex:1;">This deletes your profile, favorites, history, and tickets on this device. It can't be undone.</span>
+        <button class="btn btn-danger btn-sm" id="delete-confirm-btn">Confirm Delete</button>
+        <button class="btn btn-ghost btn-sm" id="delete-cancel-btn">Cancel</button>
       </div>
     </div>
 

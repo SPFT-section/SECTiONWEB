@@ -21,6 +21,7 @@
   --accent-dim: #cccccc;
   --on-accent: #0a0a0a;
   --toggle-on-bg: #3a3a3a;
+  --toggle-off-bg: #333333;
   --bar-blur-bg: rgba(10, 10, 10, 0.92);
 
   --radius: 6px;
@@ -53,6 +54,7 @@ html.theme-light {
   --accent-dim: #333333;
   --on-accent: #ffffff;
   --toggle-on-bg: #cfcfcf;
+  --toggle-off-bg: #dcdcdc;
   --bar-blur-bg: rgba(255, 255, 255, 0.92);
 }
 html.theme-light .cover,
@@ -1183,7 +1185,7 @@ section.block { margin-bottom: 56px; }
 .toggle {
   width: 44px; height: 24px;
   border-radius: 12px;
-  background: #333333;
+  background: var(--toggle-off-bg);
   border: 1px solid var(--border);
   position: relative;
   flex-shrink: 0;
@@ -1209,6 +1211,27 @@ section.block { margin-bottom: 56px; }
   padding: 8px 14px;
   font-size: 12.5px;
 }
+
+.settings-edit-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 24px 18px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.settings-edit-panel:last-child { border-bottom: none; }
+.settings-edit-panel input {
+  flex: 1;
+  max-width: 320px;
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  padding: 9px 14px;
+  font-size: 13px;
+}
+.settings-edit-panel input:focus { outline: none; border-color: var(--text-highlight); }
+.settings-edit-panel input::placeholder { color: var(--text-tertiary); }
 
 /* ==========================================================================
    EMPTY STATES

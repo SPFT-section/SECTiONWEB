@@ -1069,38 +1069,72 @@
 
     var emailDesc = document.getElementById("account-email-desc");
     var emailBtn = document.getElementById("account-email-btn");
-    if (emailBtn) {
+    var emailPanel = document.getElementById("email-edit-panel");
+    var emailInput = document.getElementById("email-edit-input");
+    if (emailBtn && emailPanel) {
       emailDesc.textContent = db.user.email || "No email on file";
       emailBtn.addEventListener("click", function () {
-        var val = window.prompt("Enter a new email address:", db.user.email || "");
-        if (val === null) return;
+        emailInput.value = loadDB().user.email || "";
+        emailPanel.style.display = "flex";
+        emailInput.focus();
+      });
+      document.getElementById("email-cancel-btn").addEventListener("click", function () {
+        emailPanel.style.display = "none";
+      });
+      document.getElementById("email-save-btn").addEventListener("click", function () {
         var d = loadDB();
-        d.user.email = val.trim();
+        d.user.email = emailInput.value.trim();
         saveDB(d);
         emailDesc.textContent = d.user.email || "No email on file";
+        emailPanel.style.display = "none";
+      });
+      emailInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") document.getElementById("email-save-btn").click();
       });
     }
 
     var pwDesc = document.getElementById("account-password-desc");
     var pwBtn = document.getElementById("account-password-btn");
-    if (pwBtn) {
+    var pwPanel = document.getElementById("password-edit-panel");
+    var pwInput = document.getElementById("password-edit-input");
+    if (pwBtn && pwPanel) {
       pwDesc.textContent = db.user.password ? "Password set" : "Not set";
       pwBtn.addEventListener("click", function () {
-        var val = window.prompt("Enter a new password:");
-        if (!val) return;
+        pwInput.value = "";
+        pwPanel.style.display = "flex";
+        pwInput.focus();
+      });
+      document.getElementById("password-cancel-btn").addEventListener("click", function () {
+        pwPanel.style.display = "none";
+      });
+      document.getElementById("password-save-btn").addEventListener("click", function () {
+        var val = pwInput.value;
+        if (!val) { pwInput.focus(); return; }
         var d = loadDB();
         d.user.password = val;
         saveDB(d);
         pwDesc.textContent = "Password set";
+        pwPanel.style.display = "none";
+      });
+      pwInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") document.getElementById("password-save-btn").click();
       });
     }
 
     var delBtn = document.getElementById("account-delete-btn");
-    if (delBtn) delBtn.addEventListener("click", function () {
-      if (!window.confirm("Delete your account and all local reading data? This can't be undone.")) return;
-      localStorage.removeItem(DB_KEY);
-      window.location.href = "index.html";
-    });
+    var delPanel = document.getElementById("delete-confirm-panel");
+    if (delBtn && delPanel) {
+      delBtn.addEventListener("click", function () {
+        delPanel.style.display = "flex";
+      });
+      document.getElementById("delete-cancel-btn").addEventListener("click", function () {
+        delPanel.style.display = "none";
+      });
+      document.getElementById("delete-confirm-btn").addEventListener("click", function () {
+        localStorage.removeItem(DB_KEY);
+        window.location.href = "index.html";
+      });
+    }
   }
 
   /* ------------------------------------------------------------------ *

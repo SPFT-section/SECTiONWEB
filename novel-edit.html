@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Novel — SECTiON</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <a href="index.html" class="brand-mark">SECTi<span class="dot">O</span>N</a>
+      <span class="brand-sub">Light Novels</span>
+    </div>
+    <div class="topbar-right">
+      <span class="lang-switch">EN</span>
+      <a href="login.html" class="btn btn-outline btn-sm">Login</a>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="library.html" class="active"><i class="fa-solid fa-book"></i>Library</a>
+    <a href="rankings.html"><i class="fa-solid fa-ranking-star"></i>Rankings</a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i>Profile</a>
+    <a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+    <a href="favorites.html"><i class="fa-solid fa-bookmark"></i>Favorites</a>
+    <a href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <h1 class="page-title">Edit Novel</h1>
+    <p class="page-subtitle">Update details, cover, and chapters for this title.</p>
+
+    <section class="block">
+      <div class="editor-layout">
+
+        <div>
+          <div class="cover-upload">
+            <i class="fa-solid fa-image"></i>
+            <span>No cover uploaded<br>Recommended 400×560</span>
+            <button type="button" class="btn btn-outline btn-sm">Upload Cover</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="field">
+            <label for="novel-title">Novel Title</label>
+            <input type="text" id="novel-title" placeholder="e.g. The Sovereign of Twilight Reincarnation">
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="novel-alt">Original Title</label>
+              <input type="text" id="novel-alt" placeholder="Native-language title">
+            </div>
+            <div class="field">
+              <label for="novel-lang">Source Language</label>
+              <select id="novel-lang">
+                <option>Korean</option>
+                <option>Japanese</option>
+                <option>Chinese</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="novel-status">Status</label>
+            <select id="novel-status">
+              <option>Ongoing</option>
+              <option>Completed</option>
+              <option>Hiatus</option>
+              <option>Dropped</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Genres</label>
+            <div class="genre-checks">
+              <label class="genre-check"><input type="checkbox"> Action</label>
+              <label class="genre-check"><input type="checkbox"> Adventure</label>
+              <label class="genre-check"><input type="checkbox"> Drama</label>
+              <label class="genre-check"><input type="checkbox"> Fan-Fiction</label>
+              <label class="genre-check"><input type="checkbox"> Fantasy</label>
+              <label class="genre-check"><input type="checkbox"> Mature</label>
+              <label class="genre-check"><input type="checkbox"> Mecha</label>
+              <label class="genre-check"><input type="checkbox"> Military</label>
+              <label class="genre-check"><input type="checkbox"> Sci-fi</label>
+              <label class="genre-check"><input type="checkbox"> Shounen</label>
+              <label class="genre-check"><input type="checkbox"> Supernatural</label>
+              <label class="genre-check"><input type="checkbox"> Urban Life</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="novel-desc">Description</label>
+            <textarea id="novel-desc" placeholder="Write a short synopsis for this novel..."></textarea>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="editor-actions">
+        <button type="button" class="btn btn-ghost">Cancel</button>
+        <button type="button" class="btn btn-solid">Save Novel</button>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="section-head">
+        <h2>Chapters</h2>
+        <span class="view-all">0 total</span>
+      </div>
+
+      <div class="empty-state">
+        <i class="fa-solid fa-file-lines"></i>
+        <div class="empty-state-title">No chapters yet</div>
+        <div class="empty-state-desc">Add the first chapter below to start publishing this novel.</div>
+      </div>
+
+      <div class="add-chapter-row">
+        <input type="text" placeholder="New chapter title, e.g. Chapter 1 — The Awakening">
+        <button type="button" class="btn btn-outline btn-sm"><i class="fa-solid fa-plus"></i> Add Chapter</button>
+      </div>
+
+      <!--
+        Once chapters exist, list them like this (duplicate per chapter):
+
+        <div class="chapter-admin-row">
+          <span class="chapter-admin-num">1</span>
+          <input type="text" class="chapter-admin-title" value="Chapter 1 — The Awakening">
+          <span class="chapter-admin-status">Draft</span>
+          <div class="chapter-admin-actions">
+            <a href="reading.html" class="icon-btn" title="Preview"><i class="fa-solid fa-eye"></i></a>
+            <button type="button" class="icon-btn" title="Save"><i class="fa-solid fa-check"></i></button>
+            <button type="button" class="icon-btn danger" title="Delete"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>
+      -->
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>SECTiON · Light Novels</span>
+    <div class="footer-social">
+      <a href="#"><i class="fa-brands fa-github"></i></a>
+      <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

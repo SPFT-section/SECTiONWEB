@@ -64,31 +64,11 @@
     </div>
 
     <section class="block">
-      <div class="featured">
-        <div class="featured-cover"><span class="cover-glyph">識</span></div>
-        <div class="featured-body">
-          <span class="badge">Featured</span>
-          <h1 class="featured-title">The Sovereign of Twilight Reincarnation</h1>
-          <div class="tag-row">
-            <span class="tag">Fantasy</span>
-            <span class="tag">Action</span>
-            <span class="tag">Supernatural</span>
-          </div>
-          <p class="featured-desc">
-            Stripped of his title and left for dead in the ashes of a fallen empire, Kael wakes with a second
-            chance and a power the old world feared enough to bury. Machine-translated from the ongoing
-            Korean web novel, updated daily.
-          </p>
-          <div class="featured-meta">
-            <div class="stat-item"><strong>412</strong><span>Chapters</span></div>
-            <div class="stat-item"><strong>2.8M</strong><span>Views</span></div>
-            <div class="stat-item"><strong>4.8</strong><span>Rating</span></div>
-          </div>
-          <div class="featured-actions">
-            <a href="novel-detail.html" class="btn btn-outline">Start Reading</a>
-            <a href="novel-detail.html" class="btn btn-ghost">View Details</a>
-          </div>
-        </div>
+      <div class="empty-state">
+        <i class="fa-solid fa-star"></i>
+        <div class="empty-state-title">No featured novel yet</div>
+        <div class="empty-state-desc">Mark a novel as featured from the editor to showcase it here.</div>
+        <a href="novel-edit.html" class="btn btn-outline btn-sm">Add a Novel</a>
       </div>
     </section>
 
@@ -98,101 +78,49 @@
         <a href="library.html" class="view-all">View All →</a>
       </div>
       <div class="novel-grid">
-
-        <a href="novel-detail.html" class="novel-card">
-          <div class="cover" data-initial="影"></div>
-          <div class="info">
-            <div class="genre-mini">Fantasy · Action</div>
-            <div class="title">Shadow Monarch's Silent Ascension</div>
-            <div class="meta-line"><span>Ch. 189</span><span>2h ago</span></div>
-          </div>
-        </a>
-
-        <a href="novel-detail.html" class="novel-card">
-          <div class="cover" data-initial="龍"></div>
-          <div class="info">
-            <div class="genre-mini">Mecha · Sci-fi</div>
-            <div class="title">Dragon Circuit: Genesis Protocol</div>
-            <div class="meta-line"><span>Ch. 76</span><span>3h ago</span></div>
-          </div>
-        </a>
-
-        <a href="novel-detail.html" class="novel-card">
-          <div class="cover" data-initial="星"></div>
-          <div class="info">
-            <div class="genre-mini">Drama · Urban Life</div>
-            <div class="title">A Star Falls Over Seoul</div>
-            <div class="meta-line"><span>Ch. 254</span><span>5h ago</span></div>
-          </div>
-        </a>
-
-        <a href="novel-detail.html" class="novel-card">
-          <div class="cover" data-initial="刃"></div>
-          <div class="info">
-            <div class="genre-mini">Military · Action</div>
-            <div class="title">Blade Regiment Zero</div>
-            <div class="meta-line"><span>Ch. 61</span><span>7h ago</span></div>
-          </div>
-        </a>
-
-        <a href="novel-detail.html" class="novel-card">
-          <div class="cover" data-initial="夢"></div>
-          <div class="info">
-            <div class="genre-mini">Supernatural</div>
-            <div class="title">The Dream Merchant's Ledger</div>
-            <div class="meta-line"><span>Ch. 132</span><span>9h ago</span></div>
-          </div>
-        </a>
-
-        <a href="novel-detail.html" class="novel-card">
-          <div class="cover" data-initial="王"></div>
-          <div class="info">
-            <div class="genre-mini">Fan-Fiction · Adventure</div>
-            <div class="title">Reign of the Last Vassal King</div>
-            <div class="meta-line"><span>Ch. 98</span><span>11h ago</span></div>
-          </div>
-        </a>
-
+        <div class="empty-state">
+          <i class="fa-solid fa-book"></i>
+          <div class="empty-state-title">No novels yet</div>
+          <div class="empty-state-desc">Newly updated novels will appear here once they're added to the library.</div>
+          <a href="novel-edit.html" class="btn btn-outline btn-sm">Add a Novel</a>
+        </div>
       </div>
+
+      <!--
+        Once novels exist, list them like this (duplicate per novel):
+
+        <a href="novel-detail.html" class="novel-card">
+          <div class="cover" data-initial="漢"></div>
+          <div class="info">
+            <div class="genre-mini">Genre · Genre</div>
+            <div class="title">Novel Title</div>
+            <div class="meta-line"><span>Ch. 1</span><span>Just now</span></div>
+          </div>
+        </a>
+      -->
     </section>
 
     <section class="block">
       <div class="section-head">
         <h2>Daily Top Spenders</h2>
-        <span class="view-all">Resets in 06:42:11</span>
+        <span class="view-all">Resets in 24:00:00</span>
       </div>
-      <div class="rank-list">
+      <div class="empty-state">
+        <i class="fa-solid fa-ticket"></i>
+        <div class="empty-state-title">No activity yet today</div>
+        <div class="empty-state-desc">Top readers by tickets spent will be ranked here once the day gets going.</div>
+      </div>
+
+      <!--
+        Once ranked users exist, list them like this (duplicate per row) inside a .rank-list wrapper:
+
         <div class="rank-row">
           <span class="rank-num">1</span>
-          <span class="rank-avatar">RH</span>
-          <span class="rank-name">RavenHollow</span>
-          <span class="rank-tickets"><i class="fa-solid fa-ticket"></i>2,140</span>
+          <span class="rank-avatar">AB</span>
+          <span class="rank-name">Username</span>
+          <span class="rank-tickets"><i class="fa-solid fa-ticket"></i>0</span>
         </div>
-        <div class="rank-row">
-          <span class="rank-num">2</span>
-          <span class="rank-avatar">MK</span>
-          <span class="rank-name">MikoKage</span>
-          <span class="rank-tickets"><i class="fa-solid fa-ticket"></i>1,875</span>
-        </div>
-        <div class="rank-row">
-          <span class="rank-num">3</span>
-          <span class="rank-avatar">TN</span>
-          <span class="rank-name">TenebrisNox</span>
-          <span class="rank-tickets"><i class="fa-solid fa-ticket"></i>1,502</span>
-        </div>
-        <div class="rank-row">
-          <span class="rank-num">4</span>
-          <span class="rank-avatar">SW</span>
-          <span class="rank-name">SilentWraith</span>
-          <span class="rank-tickets"><i class="fa-solid fa-ticket"></i>1,120</span>
-        </div>
-        <div class="rank-row">
-          <span class="rank-num">5</span>
-          <span class="rank-avatar">AC</span>
-          <span class="rank-name">AshCipher</span>
-          <span class="rank-tickets"><i class="fa-solid fa-ticket"></i>980</span>
-        </div>
-      </div>
+      -->
     </section>
 
   </div>

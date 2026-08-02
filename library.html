@@ -83,28 +83,27 @@
     </div>
 
     <div class="novel-grid">
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="影"></div><div class="info"><div class="genre-mini">Fantasy · Action</div><div class="title">Shadow Monarch's Silent Ascension</div><div class="meta-line"><span>Ch. 189</span><span>2h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="龍"></div><div class="info"><div class="genre-mini">Mecha · Sci-fi</div><div class="title">Dragon Circuit: Genesis Protocol</div><div class="meta-line"><span>Ch. 76</span><span>3h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="星"></div><div class="info"><div class="genre-mini">Drama · Urban Life</div><div class="title">A Star Falls Over Seoul</div><div class="meta-line"><span>Ch. 254</span><span>5h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="刃"></div><div class="info"><div class="genre-mini">Military · Action</div><div class="title">Blade Regiment Zero</div><div class="meta-line"><span>Ch. 61</span><span>7h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="夢"></div><div class="info"><div class="genre-mini">Supernatural</div><div class="title">The Dream Merchant's Ledger</div><div class="meta-line"><span>Ch. 132</span><span>9h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="王"></div><div class="info"><div class="genre-mini">Fan-Fiction · Adventure</div><div class="title">Reign of the Last Vassal King</div><div class="meta-line"><span>Ch. 98</span><span>11h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="蝕"></div><div class="info"><div class="genre-mini">Supernatural · Mature</div><div class="title">Eclipse Eater</div><div class="meta-line"><span>Ch. 145</span><span>13h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="械"></div><div class="info"><div class="genre-mini">Mecha · Military</div><div class="title">Iron Vanguard: Rusted Oath</div><div class="meta-line"><span>Ch. 88</span><span>15h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="霜"></div><div class="info"><div class="genre-mini">Fantasy · Adventure</div><div class="title">Frostbound Wanderer</div><div class="meta-line"><span>Ch. 203</span><span>18h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="城"></div><div class="info"><div class="genre-mini">Urban Life · Drama</div><div class="title">Citadel of Second Chances</div><div class="meta-line"><span>Ch. 54</span><span>20h ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="魂"></div><div class="info"><div class="genre-mini">Supernatural · Shounen</div><div class="title">Soulbind Academy</div><div class="meta-line"><span>Ch. 167</span><span>1d ago</span></div></div></a>
-      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="炎"></div><div class="info"><div class="genre-mini">Action · Fantasy</div><div class="title">Flamebearer of the Ninth Circle</div><div class="meta-line"><span>Ch. 231</span><span>1d ago</span></div></div></a>
+      <div class="empty-state">
+        <i class="fa-solid fa-book"></i>
+        <div class="empty-state-title">No novels in the library yet</div>
+        <div class="empty-state-desc">Once novels are added, they'll show up here and can be filtered by genre or search.</div>
+        <a href="novel-edit.html" class="btn btn-outline btn-sm">Add a Novel</a>
+      </div>
     </div>
 
-    <div class="pagination">
-      <a href="#" class="page-btn"><i class="fa-solid fa-angle-left"></i></a>
-      <a href="#" class="page-btn active">1</a>
-      <a href="#" class="page-btn">2</a>
-      <a href="#" class="page-btn">3</a>
-      <a href="#" class="page-btn">4</a>
-      <a href="#" class="page-btn"><i class="fa-solid fa-angle-right"></i></a>
-    </div>
+    <!--
+      Once novels exist, list them like this (duplicate per novel):
+
+      <a href="novel-detail.html" class="novel-card"><div class="cover" data-initial="漢"></div><div class="info"><div class="genre-mini">Genre · Genre</div><div class="title">Novel Title</div><div class="meta-line"><span>Ch. 1</span><span>Just now</span></div></div></a>
+
+      And re-add pagination once there's more than one page of results:
+
+      <div class="pagination">
+        <a href="#" class="page-btn"><i class="fa-solid fa-angle-left"></i></a>
+        <a href="#" class="page-btn active">1</a>
+        <a href="#" class="page-btn"><i class="fa-solid fa-angle-right"></i></a>
+      </div>
+    -->
 
   </div>
 </main>

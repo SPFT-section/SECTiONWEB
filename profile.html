@@ -40,18 +40,18 @@
   <div class="container">
 
     <div class="profile-head">
-      <div class="avatar-lg">NR</div>
+      <div class="avatar-lg">U</div>
       <div>
-        <h1 class="profile-name">Nox Reader</h1>
-        <p class="profile-handle">@noxreader</p>
-        <p class="profile-bio">Reading in the dark since 2021. Partial to fantasy revenge arcs and slow-burn mecha. Currently 6 novels deep at once.</p>
+        <h1 class="profile-name">Username</h1>
+        <p class="profile-handle">@username</p>
+        <p class="profile-bio">No bio added yet.</p>
       </div>
     </div>
 
     <div class="stat-cards">
-      <div class="stat-card"><strong>84</strong><span>Novels Read</span></div>
-      <div class="stat-card"><strong>6,214</strong><span>Chapters Read</span></div>
-      <div class="stat-card"><strong>1,290</strong><span>Tickets</span></div>
+      <div class="stat-card"><strong>0</strong><span>Novels Read</span></div>
+      <div class="stat-card"><strong>0</strong><span>Chapters Read</span></div>
+      <div class="stat-card"><strong>0</strong><span>Tickets</span></div>
     </div>
 
     <div class="submenu">
@@ -65,28 +65,22 @@
         <h2>Recently Read</h2>
         <a href="history.html" class="view-all">View All →</a>
       </div>
-      <div class="rank-list">
-        <div class="recent-row">
-          <div class="recent-cover"></div>
-          <div class="recent-title">The Sovereign of Twilight Reincarnation</div>
-          <div class="recent-progress">Ch. 408 of 412</div>
-        </div>
-        <div class="recent-row">
-          <div class="recent-cover"></div>
-          <div class="recent-title">Dragon Circuit: Genesis Protocol</div>
-          <div class="recent-progress">Ch. 61 of 76</div>
-        </div>
-        <div class="recent-row">
-          <div class="recent-cover"></div>
-          <div class="recent-title">Frostbound Wanderer</div>
-          <div class="recent-progress">Ch. 200 of 203</div>
-        </div>
-        <div class="recent-row">
-          <div class="recent-cover"></div>
-          <div class="recent-title">Eclipse Eater</div>
-          <div class="recent-progress">Ch. 30 of 145</div>
-        </div>
+      <div class="empty-state">
+        <i class="fa-solid fa-book-open"></i>
+        <div class="empty-state-title">Nothing read yet</div>
+        <div class="empty-state-desc">Start a novel and it'll show up here for quick access.</div>
+        <a href="library.html" class="btn btn-outline btn-sm">Browse the Library</a>
       </div>
+
+      <!--
+        Once reading activity exists, list rows like this inside a .rank-list wrapper:
+
+        <div class="recent-row">
+          <div class="recent-cover"></div>
+          <div class="recent-title">Novel Title</div>
+          <div class="recent-progress">Ch. 1 of 1</div>
+        </div>
+      -->
     </section>
 
   </div>

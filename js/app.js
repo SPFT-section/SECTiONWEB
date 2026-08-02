@@ -610,18 +610,49 @@
           "Add the first chapter below to start publishing this novel.");
       } else {
         wrap.innerHTML = chs.map(function (c) {
+          var hasContent = !!(c.content && c.content.trim() && c.content.indexOf("Chapter content will appear here once") !== 0);
           return (
             '<div class="chapter-admin-row" data-chapter-id="' + c.id + '">' +
             '<span class="chapter-admin-num">' + (c.index + 1) + "</span>" +
             '<input type="text" class="chapter-admin-title" value="' + escapeHtml(c.title) + '">' +
+            '<span class="chapter-admin-status ' + (hasContent ? "written" : "draft") + '">' + (hasContent ? "Written" : "No content") + "</span>" +
             '<div class="chapter-admin-actions">' +
             '<a href="reading.html?novel=' + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(c.id) + '" class="icon-btn" title="Preview"><i class="fa-solid fa-eye"></i></a>' +
+            '<button type="button" class="icon-btn" data-toggle-content title="Edit Content"><i class="fa-solid fa-pen-to-square"></i></button>' +
             '<button type="button" class="icon-btn" data-save-chapter title="Save"><i class="fa-solid fa-check"></i></button>' +
             '<button type="button" class="icon-btn danger" data-delete-chapter title="Delete"><i class="fa-solid fa-trash"></i></button>' +
-            "</div></div>"
+            "</div>" +
+            '<div class="chapter-admin-content">' +
+            '<div class="content-hint">This is the chapter text readers will see on the reading page.</div>' +
+            '<textarea data-chapter-content placeholder="Write or paste the chapter\'s translated text here...">' + escapeHtml(hasContent ? c.content : "") + "</textarea>" +
+            '<div class="content-save-row"><button type="button" class="btn btn-outline btn-sm" data-save-content>Save Content</button></div>' +
+            "</div>" +
+            "</div>"
           );
         }).join("");
 
+        wrap.querySelectorAll("[data-toggle-content]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var row = btn.closest(".chapter-admin-row");
+            row.classList.toggle("open");
+            btn.classList.toggle("active", row.classList.contains("open"));
+          });
+        });
+        wrap.querySelectorAll("[data-save-content]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var row = btn.closest(".chapter-admin-row");
+            var chId = row.getAttribute("data-chapter-id");
+            var content = row.querySelector("[data-chapter-content]").value;
+            var dd = loadDB();
+            var ch = dd.chapters.filter(function (c) { return c.id === chId; })[0];
+            if (ch) {
+              ch.content = content;
+              saveDB(dd);
+              btn.textContent = "Saved";
+              setTimeout(function () { renderChapterAdmin(); }, 500);
+            }
+          });
+        });
         wrap.querySelectorAll("[data-save-chapter]").forEach(function (btn) {
           btn.addEventListener("click", function () {
             var row = btn.closest(".chapter-admin-row");
@@ -654,6 +685,7 @@
       }
 
       var input = document.getElementById("new-chapter-title");
+      var contentInput = document.getElementById("new-chapter-content");
       var addBtn = document.getElementById("add-chapter-btn");
       addBtn.onclick = function () {
         var title = input.value.trim();
@@ -665,11 +697,12 @@
           novelId: novel.id,
           index: existing.length,
           title: title,
-          content: "Chapter content will appear here once this novel's translated text is added.",
+          content: contentInput.value.trim() || "Chapter content will appear here once this novel's translated text is added.",
           createdAt: Date.now()
         });
         saveDB(dd);
         input.value = "";
+        contentInput.value = "";
         renderChapterAdmin();
       };
     }

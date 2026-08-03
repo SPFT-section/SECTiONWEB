@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>(function(){try{var d=JSON.parse(localStorage.getItem("section_db_v1"));if(d&&d.settings&&d.settings.theme==="light")document.documentElement.classList.add("theme-light");}catch(e){}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<title>Write — SECTiON</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="write">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <a href="index.html" class="brand-mark">SECTi<span class="dot">O</span>N</a>
+      <span class="brand-sub">Light Novels</span>
+    </div>
+    <div class="topbar-right">
+      <button type="button" id="theme-toggle" class="theme-toggle-btn" title="Toggle light / dark mode"><i class="fa-solid fa-moon"></i></button>
+      <span class="lang-switch">EN</span>
+      <span id="auth-slot"><a href="login.html" class="btn btn-outline btn-sm">Login</a></span>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html"><i class="fa-solid fa-house"></i>Home</a>
+    <a href="library.html"><i class="fa-solid fa-book"></i>Library</a>
+    <a href="rankings.html"><i class="fa-solid fa-ranking-star"></i>Rankings</a>
+    <a href="profile.html"><i class="fa-solid fa-user"></i>Profile</a>
+    <a href="history.html"><i class="fa-solid fa-clock-rotate-left"></i>History</a>
+    <a href="favorites.html"><i class="fa-solid fa-bookmark"></i>Favorites</a>
+    <a href="settings.html"><i class="fa-solid fa-gear"></i>Settings</a>
+  </div>
+</nav>
+
+<div class="write-bar" id="write-bar" style="display:none;">
+  <div class="write-bar-inner">
+    <a href="library.html" class="write-back" id="write-back"><i class="fa-solid fa-arrow-left"></i> Back</a>
+    <div class="write-selects">
+      <select id="write-novel-select"></select>
+      <select id="write-chapter-select"></select>
+    </div>
+    <div class="write-meta">
+      <span class="write-status saved" id="write-status"><i class="fa-solid fa-circle"></i><span>All changes saved</span></span>
+      <span id="write-wordcount">0 words</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="container" id="write-root">
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <span>SECTiON · Light Novels</span>
+    <div class="footer-social">
+      <a href="#"><i class="fa-brands fa-github"></i></a>
+      <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="#"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/app.js" defer></script>
+</body>
+</html>

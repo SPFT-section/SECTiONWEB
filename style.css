@@ -1539,6 +1539,11 @@ section.block { margin-bottom: 56px; }
 }
 .icon-btn:hover { color: var(--text-main); border-color: var(--border-hover); }
 .icon-btn.danger:hover { color: #ffffff; border-color: #ffffff; }
+.btn.confirm-armed, .icon-btn.confirm-armed {
+  border-color: var(--text-highlight);
+  background: var(--bg-hover);
+  color: var(--text-highlight);
+}
 
 .add-chapter-row {
   display: flex;
@@ -1616,6 +1621,118 @@ section.block { margin-bottom: 56px; }
 
 .chapter-admin-status.draft { color: var(--text-tertiary); }
 .chapter-admin-status.written { color: var(--text-highlight); }
+
+/* ==========================================================================
+   WRITE PAGE — dedicated distraction-free chapter editor
+   ========================================================================== */
+
+.write-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--bar-blur-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border-soft);
+  padding: 12px 0;
+}
+.write-bar-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.write-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.write-back:hover { color: var(--text-main); }
+
+.write-selects { display: flex; gap: 8px; flex: 1; min-width: 200px; }
+.write-selects select {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  padding: 7px 10px;
+  font-size: 12px;
+}
+.write-selects select:focus { outline: none; border-color: var(--text-highlight); }
+
+.write-meta { display: flex; align-items: center; gap: 14px; flex-shrink: 0; font-size: 11px; color: var(--text-tertiary); white-space: nowrap; }
+.write-status { display: flex; align-items: center; gap: 6px; }
+.write-status i { font-size: 9px; }
+.write-status.saved i { color: var(--text-highlight); }
+.write-status.saving i { color: var(--text-secondary); }
+
+.write-content-wrap { max-width: 780px; margin: 0 auto; padding: 40px 32px 80px; }
+
+.write-title-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text-highlight);
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 800;
+  padding: 0 0 16px;
+  margin-bottom: 24px;
+}
+.write-title-input:focus { outline: none; border-color: var(--text-highlight); }
+.write-title-input::placeholder { color: var(--text-tertiary); font-weight: 700; }
+
+.write-textarea {
+  width: 100%;
+  min-height: 55vh;
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.95;
+  resize: vertical;
+}
+.write-textarea:focus { outline: none; }
+.write-textarea::placeholder { color: var(--text-tertiary); }
+
+.write-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-soft);
+}
+.write-toolbar-left { display: flex; gap: 8px; }
+.write-toolbar-right { display: flex; gap: 10px; }
+
+.novel-picker-list { display: flex; flex-direction: column; gap: 2px; }
+.novel-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  transition: all 0.2s var(--ease);
+}
+.novel-picker-row:hover { border-color: var(--border-hover); background: var(--bg-hover); }
+.novel-picker-cover { width: 40px; height: 56px; border-radius: 3px; flex-shrink: 0; background: var(--bg-card); border: 1px solid var(--border); background-size: cover; background-position: center; }
+.novel-picker-info { flex: 1; min-width: 0; }
+.novel-picker-title { font-size: 13.5px; font-weight: 700; color: var(--text-main); }
+.novel-picker-meta { font-size: 11px; color: var(--text-secondary); }
 
 .danger-text { color: #999999; }
 .btn-danger {

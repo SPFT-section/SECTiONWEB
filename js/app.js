@@ -62,6 +62,31 @@
     return db;
   }
 
+  function armConfirm(btn, confirmHTML, onConfirm, revertMs) {
+    revertMs = revertMs || 3000;
+    var originalHTML = btn.innerHTML;
+    var armed = false;
+    var revertTimer = null;
+    btn.addEventListener("click", function () {
+      if (!armed) {
+        armed = true;
+        btn.innerHTML = confirmHTML;
+        btn.classList.add("confirm-armed");
+        revertTimer = setTimeout(function () {
+          armed = false;
+          btn.innerHTML = originalHTML;
+          btn.classList.remove("confirm-armed");
+        }, revertMs);
+      } else {
+        clearTimeout(revertTimer);
+        armed = false;
+        btn.innerHTML = originalHTML;
+        btn.classList.remove("confirm-armed");
+        onConfirm();
+      }
+    });
+  }
+
   function qs(name) {
     return new URLSearchParams(window.location.search).get(name);
   }
@@ -531,6 +556,20 @@
       : "Fill in the details below to publish a new novel.";
     document.title = (novel ? "Edit Novel" : "Add Novel") + " — SECTiON";
 
+    var writerLink = document.getElementById("open-writer-link");
+    if (writerLink) {
+      if (novel) {
+        writerLink.href = "write.html?novel=" + encodeURIComponent(novel.id);
+      } else {
+        writerLink.addEventListener("click", function (e) {
+          e.preventDefault();
+        });
+        writerLink.href = "#";
+        writerLink.style.opacity = "0.4";
+        writerLink.title = "Save the novel first";
+      }
+    }
+
     var titleInput = document.getElementById("novel-title");
     var altInput = document.getElementById("novel-alt");
     var langSelect = document.getElementById("novel-lang");
@@ -644,6 +683,7 @@
             '<span class="chapter-admin-status ' + (hasContent ? "written" : "draft") + '">' + (hasContent ? "Written" : "No content") + "</span>" +
             '<div class="chapter-admin-actions">' +
             '<a href="reading.html?novel=' + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(c.id) + '" class="icon-btn" title="Preview"><i class="fa-solid fa-eye"></i></a>' +
+            '<a href="write.html?novel=' + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(c.id) + '" class="icon-btn" title="Open in Writer"><i class="fa-solid fa-feather"></i></a>' +
             '<button type="button" class="icon-btn" data-toggle-content title="Edit Content"><i class="fa-solid fa-pen-to-square"></i></button>' +
             '<button type="button" class="icon-btn" data-save-chapter title="Save"><i class="fa-solid fa-check"></i></button>' +
             '<button type="button" class="icon-btn danger" data-delete-chapter title="Delete"><i class="fa-solid fa-trash"></i></button>' +
@@ -695,10 +735,9 @@
           });
         });
         wrap.querySelectorAll("[data-delete-chapter]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
+          armConfirm(btn, '<i class="fa-solid fa-check"></i> Confirm?', function () {
             var row = btn.closest(".chapter-admin-row");
             var chId = row.getAttribute("data-chapter-id");
-            if (!window.confirm("Delete this chapter? This can't be undone.")) return;
             var dd = loadDB();
             dd.chapters = dd.chapters.filter(function (c) { return c.id !== chId; });
             // re-index remaining chapters for this novel
@@ -863,6 +902,194 @@
         window.scrollBy(0, 1);
       }, 60);
     }
+  }
+
+  /* ------------------------------------------------------------------ *
+   *  Page: write.html — dedicated distraction-free chapter editor
+   * ------------------------------------------------------------------ */
+
+  function pageWrite() {
+    var db = loadDB();
+    var novelId = qs("novel");
+    var chapterId = qs("chapter");
+    var root = document.getElementById("write-root");
+    var bar = document.getElementById("write-bar");
+
+    if (!db.novels.length) {
+      bar.style.display = "none";
+      root.innerHTML = emptyStateHTML("fa-feather", "No novels to write in yet",
+        "Create a novel first, then come back here to start writing its chapters.",
+        "novel-edit.html", "Create a Novel");
+      return;
+    }
+
+    if (!novelId) {
+      bar.style.display = "none";
+      root.innerHTML =
+        '<h1 class="page-title">Write</h1><p class="page-subtitle">Choose a novel to start writing a chapter.</p>' +
+        '<div class="novel-picker-list">' +
+        db.novels.map(function (n) {
+          var chs = novelChapters(db, n.id);
+          return (
+            '<a href="write.html?novel=' + encodeURIComponent(n.id) + '" class="novel-picker-row">' +
+            '<div class="novel-picker-cover" ' + coverStyle(n) + "></div>" +
+            '<div class="novel-picker-info"><div class="novel-picker-title">' + escapeHtml(n.title) + '</div><div class="novel-picker-meta">' + chs.length + " chapters</div></div>" +
+            '<i class="fa-solid fa-chevron-right" style="color:var(--text-tertiary);"></i>' +
+            "</a>"
+          );
+        }).join("") +
+        "</div>";
+      return;
+    }
+
+    var novel = db.novels.filter(function (n) { return n.id === novelId; })[0];
+    if (!novel) {
+      bar.style.display = "none";
+      root.innerHTML = emptyStateHTML("fa-triangle-exclamation", "Novel not found",
+        "This novel may have been removed, or the link is out of date.", "write.html", "Choose Another Novel");
+      return;
+    }
+
+    bar.style.display = "block";
+    document.title = "Write — " + novel.title + " — SECTiON";
+    document.getElementById("write-back").href = "novel-edit.html?id=" + encodeURIComponent(novel.id);
+
+    var novelSelect = document.getElementById("write-novel-select");
+    novelSelect.innerHTML = db.novels.map(function (n) {
+      return '<option value="' + n.id + '"' + (n.id === novel.id ? " selected" : "") + ">" + escapeHtml(n.title) + "</option>";
+    }).join("");
+    novelSelect.addEventListener("change", function () {
+      window.location.href = "write.html?novel=" + encodeURIComponent(novelSelect.value);
+    });
+
+    var chs = novelChapters(db, novel.id);
+    var chapterSelect = document.getElementById("write-chapter-select");
+
+    function renderChapterOptions(selectedId) {
+      var opts = chs.map(function (c) {
+        return '<option value="' + c.id + '"' + (c.id === selectedId ? " selected" : "") + ">" + (c.index + 1) + ". " + escapeHtml(c.title) + "</option>";
+      }).join("");
+      opts += '<option value="__new__"' + (selectedId == null ? " selected" : "") + ">+ New Chapter</option>";
+      chapterSelect.innerHTML = opts;
+    }
+
+    var currentChapter = chapterId ? chs.filter(function (c) { return c.id === chapterId; })[0] : null;
+    renderChapterOptions(currentChapter ? currentChapter.id : null);
+
+    chapterSelect.addEventListener("change", function () {
+      if (chapterSelect.value === "__new__") {
+        window.location.href = "write.html?novel=" + encodeURIComponent(novel.id);
+      } else {
+        window.location.href = "write.html?novel=" + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(chapterSelect.value);
+      }
+    });
+
+    var hasRealContent = currentChapter && currentChapter.content && currentChapter.content.indexOf("Chapter content will appear here once") !== 0;
+
+    root.innerHTML =
+      '<div class="write-content-wrap">' +
+      '<input type="text" id="write-title" class="write-title-input" placeholder="Chapter title...">' +
+      '<textarea id="write-body" class="write-textarea" placeholder="Start writing your chapter here..."></textarea>' +
+      '<div class="write-toolbar">' +
+      '<div class="write-toolbar-left">' +
+      (currentChapter
+        ? '<a href="reading.html?novel=' + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(currentChapter.id) + '" class="btn btn-ghost btn-sm"><i class="fa-solid fa-eye"></i> Preview</a>'
+        : '<span style="font-size:11.5px;color:var(--text-tertiary);">Start typing — this becomes a new chapter automatically.</span>') +
+      "</div>" +
+      '<div class="write-toolbar-right">' +
+      '<button type="button" class="btn btn-outline btn-sm" id="write-delete-btn" style="' + (currentChapter ? "" : "display:none;") + '"><i class="fa-solid fa-trash"></i> Delete Chapter</button>' +
+      '<button type="button" class="btn btn-solid btn-sm" id="write-save-btn">Save Now</button>' +
+      "</div></div></div>";
+
+    var titleInput = document.getElementById("write-title");
+    var bodyInput = document.getElementById("write-body");
+    titleInput.value = currentChapter ? currentChapter.title : "";
+    bodyInput.value = hasRealContent ? currentChapter.content : "";
+
+    var statusEl = document.getElementById("write-status");
+    var wordcountEl = document.getElementById("write-wordcount");
+    var saveTimer = null;
+    var chapterRef = currentChapter;
+
+    function updateWordCount() {
+      var words = bodyInput.value.trim().length ? bodyInput.value.trim().split(/\s+/).length : 0;
+      wordcountEl.textContent = words + " word" + (words === 1 ? "" : "s");
+    }
+    updateWordCount();
+
+    function setStatus(state) {
+      statusEl.classList.remove("saved", "saving");
+      statusEl.classList.add(state);
+      statusEl.querySelector("span").textContent = state === "saving" ? "Saving..." : "All changes saved";
+    }
+
+    function wireDeleteButton() {
+      var delBtn = document.getElementById("write-delete-btn");
+      if (!delBtn || !chapterRef) return;
+      armConfirm(delBtn, '<i class="fa-solid fa-check"></i> Confirm Delete', function () {
+        var dd = loadDB();
+        dd.chapters = dd.chapters.filter(function (c) { return c.id !== chapterRef.id; });
+        var remaining = novelChapters(dd, novel.id);
+        remaining.forEach(function (c, i) { c.index = i; });
+        saveDB(dd);
+        window.location.href = "write.html?novel=" + encodeURIComponent(novel.id);
+      });
+    }
+    wireDeleteButton();
+
+    function doSave() {
+      var title = titleInput.value.trim();
+      var content = bodyInput.value;
+      var dd = loadDB();
+      if (!chapterRef) {
+        if (!title && !content.trim()) { setStatus("saved"); return; }
+        var existingForNovel = novelChapters(dd, novel.id);
+        var newCh = {
+          id: uid(),
+          novelId: novel.id,
+          index: existingForNovel.length,
+          title: title || ("Chapter " + (existingForNovel.length + 1)),
+          content: content,
+          createdAt: Date.now()
+        };
+        dd.chapters.push(newCh);
+        saveDB(dd);
+        chapterRef = newCh;
+        window.history.replaceState(null, "", "write.html?novel=" + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(newCh.id));
+        chs = novelChapters(dd, novel.id);
+        renderChapterOptions(newCh.id);
+        document.getElementById("write-delete-btn").style.display = "";
+        wireDeleteButton();
+        document.querySelector(".write-toolbar-left").innerHTML =
+          '<a href="reading.html?novel=' + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(newCh.id) + '" class="btn btn-ghost btn-sm"><i class="fa-solid fa-eye"></i> Preview</a>';
+      } else {
+        var ch = dd.chapters.filter(function (c) { return c.id === chapterRef.id; })[0];
+        if (ch) {
+          ch.title = title || ch.title;
+          ch.content = content;
+          saveDB(dd);
+        }
+      }
+      setStatus("saved");
+    }
+
+    function scheduleSave() {
+      setStatus("saving");
+      if (saveTimer) clearTimeout(saveTimer);
+      saveTimer = setTimeout(doSave, 900);
+    }
+
+    titleInput.addEventListener("input", scheduleSave);
+    bodyInput.addEventListener("input", function () { updateWordCount(); scheduleSave(); });
+
+    document.getElementById("write-save-btn").addEventListener("click", function () {
+      if (saveTimer) clearTimeout(saveTimer);
+      doSave();
+    });
+
+    window.addEventListener("beforeunload", function () {
+      if (saveTimer) doSave();
+    });
   }
 
   /* ------------------------------------------------------------------ *
@@ -1282,6 +1509,7 @@
       "novel-detail": pageNovelDetail,
       "novel-edit": pageNovelEdit,
       reading: pageReading,
+      write: pageWrite,
       favorites: pageFavorites,
       history: pageHistory,
       profile: pageProfile,

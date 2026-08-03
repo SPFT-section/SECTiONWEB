@@ -1568,39 +1568,6 @@ section.block { margin-bottom: 56px; }
 }
 
 .chapter-admin-row { flex-wrap: wrap; }
-.chapter-admin-content {
-  display: none;
-  width: 100%;
-  order: 5;
-  margin: 10px 0 4px 54px;
-}
-.chapter-admin-row.open .chapter-admin-content { display: block; }
-.chapter-admin-content textarea {
-  width: 100%;
-  background: var(--bg-main);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text-main);
-  padding: 12px 14px;
-  font-size: 13.5px;
-  font-family: var(--font);
-  line-height: 1.7;
-  min-height: 220px;
-  resize: vertical;
-}
-.chapter-admin-content textarea:focus { outline: none; border-color: var(--text-highlight); }
-.chapter-admin-content .content-save-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 8px;
-}
-.chapter-admin-content .content-hint {
-  font-size: 11px;
-  color: var(--text-tertiary);
-  margin-bottom: 8px;
-}
-.icon-btn.active { color: var(--text-highlight); border-color: var(--text-highlight); }
 
 .add-chapter-row { flex-direction: column; align-items: stretch; }
 .add-chapter-row .add-chapter-title-row { display: flex; gap: 10px; }
@@ -1716,6 +1683,43 @@ section.block { margin-bottom: 56px; }
 }
 .write-toolbar-left { display: flex; gap: 8px; }
 .write-toolbar-right { display: flex; gap: 10px; }
+
+.quick-write-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 28px;
+}
+.quick-write-card .quick-write-label { font-size: 12.5px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+.quick-write-row { display: flex; gap: 10px; }
+.quick-write-row input {
+  flex: 1;
+  background: var(--bg-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  padding: 11px 14px;
+  font-size: 14px;
+}
+.quick-write-row input:focus { outline: none; border-color: var(--text-highlight); }
+.quick-write-row input::placeholder { color: var(--text-tertiary); }
+
+.write-picker-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 28px 0 16px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.write-picker-divider::before, .write-picker-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-soft);
+}
 
 .novel-picker-list { display: flex; flex-direction: column; gap: 2px; }
 .novel-picker-row {

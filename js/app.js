@@ -672,7 +672,7 @@
 
       if (!chs.length) {
         wrap.innerHTML = emptyStateHTML("fa-file-lines", "No chapters yet",
-          "Add the first chapter below to start publishing this novel.");
+          "Add the first chapter below, or use the Writer for a bigger writing space.");
       } else {
         wrap.innerHTML = chs.map(function (c) {
           var hasContent = !!(c.content && c.content.trim() && c.content.indexOf("Chapter content will appear here once") !== 0);
@@ -683,57 +683,32 @@
             '<span class="chapter-admin-status ' + (hasContent ? "written" : "draft") + '">' + (hasContent ? "Written" : "No content") + "</span>" +
             '<div class="chapter-admin-actions">' +
             '<a href="reading.html?novel=' + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(c.id) + '" class="icon-btn" title="Preview"><i class="fa-solid fa-eye"></i></a>' +
-            '<a href="write.html?novel=' + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(c.id) + '" class="icon-btn" title="Open in Writer"><i class="fa-solid fa-feather"></i></a>' +
-            '<button type="button" class="icon-btn" data-toggle-content title="Edit Content"><i class="fa-solid fa-pen-to-square"></i></button>' +
-            '<button type="button" class="icon-btn" data-save-chapter title="Save"><i class="fa-solid fa-check"></i></button>' +
+            '<a href="write.html?novel=' + encodeURIComponent(novel.id) + "&chapter=" + encodeURIComponent(c.id) + '" class="icon-btn" title="Write / Edit Content"><i class="fa-solid fa-feather"></i></a>' +
             '<button type="button" class="icon-btn danger" data-delete-chapter title="Delete"><i class="fa-solid fa-trash"></i></button>' +
-            "</div>" +
-            '<div class="chapter-admin-content">' +
-            '<div class="content-hint">This is the chapter text readers will see on the reading page.</div>' +
-            '<textarea data-chapter-content placeholder="Write or paste the chapter\'s translated text here...">' + escapeHtml(hasContent ? c.content : "") + "</textarea>" +
-            '<div class="content-save-row"><button type="button" class="btn btn-outline btn-sm" data-save-content>Save Content</button></div>' +
             "</div>" +
             "</div>"
           );
         }).join("");
 
-        wrap.querySelectorAll("[data-toggle-content]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            var row = btn.closest(".chapter-admin-row");
-            row.classList.toggle("open");
-            btn.classList.toggle("active", row.classList.contains("open"));
-          });
-        });
-        wrap.querySelectorAll("[data-save-content]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            var row = btn.closest(".chapter-admin-row");
+        // auto-save the title as soon as you click away — no separate Save button needed
+        wrap.querySelectorAll(".chapter-admin-title").forEach(function (titleInput) {
+          titleInput.addEventListener("blur", function () {
+            var row = titleInput.closest(".chapter-admin-row");
             var chId = row.getAttribute("data-chapter-id");
-            var content = row.querySelector("[data-chapter-content]").value;
+            var newTitle = titleInput.value.trim();
+            if (!newTitle) return;
             var dd = loadDB();
             var ch = dd.chapters.filter(function (c) { return c.id === chId; })[0];
-            if (ch) {
-              ch.content = content;
-              saveDB(dd);
-              btn.textContent = "Saved";
-              setTimeout(function () { renderChapterAdmin(); }, 500);
-            }
-          });
-        });
-        wrap.querySelectorAll("[data-save-chapter]").forEach(function (btn) {
-          btn.addEventListener("click", function () {
-            var row = btn.closest(".chapter-admin-row");
-            var chId = row.getAttribute("data-chapter-id");
-            var newTitle = row.querySelector(".chapter-admin-title").value.trim();
-            var dd = loadDB();
-            var ch = dd.chapters.filter(function (c) { return c.id === chId; })[0];
-            if (ch && newTitle) {
+            if (ch && ch.title !== newTitle) {
               ch.title = newTitle;
               saveDB(dd);
-              btn.innerHTML = '<i class="fa-solid fa-check" style="color:var(--text-highlight);"></i>';
-              setTimeout(function () { btn.innerHTML = '<i class="fa-solid fa-check"></i>'; }, 900);
             }
           });
+          titleInput.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") titleInput.blur();
+          });
         });
+
         wrap.querySelectorAll("[data-delete-chapter]").forEach(function (btn) {
           armConfirm(btn, '<i class="fa-solid fa-check"></i> Confirm?', function () {
             var row = btn.closest(".chapter-admin-row");
@@ -917,16 +892,29 @@
 
     if (!db.novels.length) {
       bar.style.display = "none";
-      root.innerHTML = emptyStateHTML("fa-feather", "No novels to write in yet",
-        "Create a novel first, then come back here to start writing its chapters.",
-        "novel-edit.html", "Create a Novel");
+      root.innerHTML =
+        '<h1 class="page-title">Write</h1><p class="page-subtitle">Give your novel a title to start writing its first chapter right away.</p>' +
+        '<div class="quick-write-card">' +
+        '<div class="quick-write-label">Novel Title</div>' +
+        '<div class="quick-write-row">' +
+        '<input type="text" id="quick-novel-title" placeholder="e.g. The Sovereign of Twilight Reincarnation">' +
+        '<button type="button" class="btn btn-solid" id="quick-novel-btn">Start Writing <i class="fa-solid fa-arrow-right"></i></button>' +
+        "</div></div>";
+      wireQuickCreate();
       return;
     }
 
     if (!novelId) {
       bar.style.display = "none";
       root.innerHTML =
-        '<h1 class="page-title">Write</h1><p class="page-subtitle">Choose a novel to start writing a chapter.</p>' +
+        '<h1 class="page-title">Write</h1><p class="page-subtitle">Start a new novel, or jump back into one you\'re already writing.</p>' +
+        '<div class="quick-write-card">' +
+        '<div class="quick-write-label">New Novel</div>' +
+        '<div class="quick-write-row">' +
+        '<input type="text" id="quick-novel-title" placeholder="e.g. The Sovereign of Twilight Reincarnation">' +
+        '<button type="button" class="btn btn-solid" id="quick-novel-btn">Start Writing <i class="fa-solid fa-arrow-right"></i></button>' +
+        "</div></div>" +
+        '<div class="write-picker-divider">or continue an existing novel</div>' +
         '<div class="novel-picker-list">' +
         db.novels.map(function (n) {
           var chs = novelChapters(db, n.id);
@@ -939,7 +927,25 @@
           );
         }).join("") +
         "</div>";
+      wireQuickCreate();
       return;
+    }
+
+    function wireQuickCreate() {
+      var input = document.getElementById("quick-novel-title");
+      var btn = document.getElementById("quick-novel-btn");
+      function create() {
+        var title = input.value.trim();
+        if (!title) { input.focus(); return; }
+        var d = loadDB();
+        var newNovel = { id: uid(), title: title, altTitle: "", lang: "Korean", status: "Ongoing", genres: [], description: "", featured: false, cover: null, createdAt: Date.now(), views: 0, rating: null };
+        d.novels.push(newNovel);
+        saveDB(d);
+        window.location.href = "write.html?novel=" + encodeURIComponent(newNovel.id);
+      }
+      btn.addEventListener("click", create);
+      input.addEventListener("keydown", function (e) { if (e.key === "Enter") create(); });
+      input.focus();
     }
 
     var novel = db.novels.filter(function (n) { return n.id === novelId; })[0];
@@ -957,9 +963,13 @@
     var novelSelect = document.getElementById("write-novel-select");
     novelSelect.innerHTML = db.novels.map(function (n) {
       return '<option value="' + n.id + '"' + (n.id === novel.id ? " selected" : "") + ">" + escapeHtml(n.title) + "</option>";
-    }).join("");
+    }).join("") + '<option value="__new__">+ New Novel</option>';
     novelSelect.addEventListener("change", function () {
-      window.location.href = "write.html?novel=" + encodeURIComponent(novelSelect.value);
+      if (novelSelect.value === "__new__") {
+        window.location.href = "write.html";
+      } else {
+        window.location.href = "write.html?novel=" + encodeURIComponent(novelSelect.value);
+      }
     });
 
     var chs = novelChapters(db, novel.id);
